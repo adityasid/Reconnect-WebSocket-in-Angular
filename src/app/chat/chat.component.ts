@@ -6,22 +6,25 @@ import { ChatMessageDto } from '../models/chatMessageDto';
 @Component({
   selector: 'cf-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
-
-  constructor(public webSocketService: WebSocketService) { }
+  constructor(public webSocketService: WebSocketService) {}
 
   ngOnInit(): void {
-    this.webSocketService.openWebSocket();
+    // this.webSocketService.openWebSocket();
+    this.webSocketService.onWebSocket();
   }
 
   ngOnDestroy(): void {
-    this.webSocketService.closeWebSocket();
+    // this.webSocketService.closeWebSocket();
   }
 
   sendMessage(sendForm: NgForm) {
-    const chatMessageDto = new ChatMessageDto(sendForm.value.user, sendForm.value.message);
+    const chatMessageDto = new ChatMessageDto(
+      sendForm.value.user,
+      sendForm.value.message
+    );
     this.webSocketService.sendMessage(chatMessageDto);
     sendForm.controls.message.reset();
   }
